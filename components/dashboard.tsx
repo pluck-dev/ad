@@ -1,0 +1,22 @@
+'use client';
+import Link from 'next/link';
+import { ArrowRight, ArrowUpRight, BookOpen, Check, Clock, Compass, FileText, Layers, Sparkles, Target } from 'lucide-react';
+import type { DocumentSummary } from '@/lib/content';
+import { useProgress } from './progress';
+export function Dashboard({ documents }: { documents: DocumentSummary[] }) {
+  const { progress } = useProgress();
+  const lessons = documents.filter(d => d.lesson);
+  const completed = lessons.filter(d => progress.completed.includes(d.id)).length;
+  const next = documents.find(d => d.id === progress.last) || lessons.find(d => !progress.completed.includes(d.id)) || lessons[0];
+  const collections = [
+    { icon: <Target />, title: '바로 꺼내 쓰는 실무', text: '상품 설계부터 광고 운영, 영업까지', href: '/library/playbook', group: '실무 플레이북', color: 'peach' },
+    { icon: <Compass />, title: '근거가 있는 인사이트', text: '국내외 사례와 원문, 검증 기록', href: '/library/research', group: '리서치 원문', color: 'lavender' },
+    { icon: <Layers />, title: '실제 프로젝트 들여다보기', text: '진단, 제안, 콘텐츠로 이어지는 과정', href: '/library/cases', group: '고객 사례', color: 'blue' },
+  ];
+  return <div className="dashboard"><div className="page-intro"><p className="eyebrow"><span /> YOUR MARKETING PLAYGROUND</p><h1>배우고, 실행하고,<br /><span>나만의 마케팅을 쌓아가세요.</span></h1><p>흩어져 있던 지식을 하나의 흐름으로.<br className="mobile-only" /> 기초부터 실무까지, 여기서 시작하세요.</p></div>
+    <section className="hero-card"><div className="hero-copy"><span className="pill"><Sparkles size={13} /> 나를 위한 마케팅 학습 코스</span><h2>큰 그림을 이해하면,<br />다음 한 걸음이 보입니다.</h2><p>수익모델부터 첫 고객, 실행 로드맵까지.<br />8개의 단원으로 차근차근 연결해 보세요.</p><Link className="primary-button" href={`/docs/${next.id}`}>{progress.last ? '이어서 학습하기' : '첫 번째 학습 시작하기'}<ArrowRight size={17} /></Link><span className="hero-caption"><Clock size={13} /> 단원별로 나누어, 부담 없이</span></div><div className="hero-art" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="art-star">✳</div><div className="floating-note note-back"><span>STEP 02</span><strong>작게 실행하기</strong><div className="note-line" /><div className="note-line short" /></div><div className="floating-note note-front"><span className="note-icon"><BookOpen size={26} /></span><span>STEP 01</span><strong>마케팅의 큰 그림</strong><p>좋은 시작은 이해에서부터.</p><div className="note-check"><span><Check size={13} /></span> 오늘도 한 걸음 성장</div></div><span className="art-caption">Small steps. Real growth.</span></div></section>
+    <div className="stats-row"><div><BookOpen size={19} /><span>학습 코스<strong>8 <small>단원</small></strong></span></div><div><FileText size={19} /><span>지식 라이브러리<strong>{documents.filter(d => !d.lesson).length} <small>문서</small></strong></span></div><div><Check size={19} /><span>나의 학습 진도<strong>{Math.round(completed / 8 * 100)}<small>% 완료</small></strong></span><div className="mini-track"><span style={{ width: `${completed / 8 * 100}%` }} /></div></div></div>
+    <section className="course-section"><div className="section-heading"><div><p className="eyebrow">LEARNING PATH</p><h2>어디서부터 시작할까요?</h2></div><span>순서대로 배우면 더 쉬워요</span></div><div className="course-grid">{lessons.map(d => <Link key={d.id} href={`/docs/${d.id}`} className={`course-card ${progress.completed.includes(d.id) ? 'completed' : ''}`}><div className="course-top"><span className="course-number">{String(d.lesson).padStart(2, '0')}</span><span className="course-time">{progress.completed.includes(d.id) ? <><Check size={13} /> 학습 완료</> : <><Clock size={12} /> {d.minutes}분</>}</span></div><h3>{d.title}</h3><p>{d.description}</p><div className="course-bottom"><span>{d.lesson === 1 ? '여기서 시작하세요' : '단원 살펴보기'}</span><ArrowRight size={16} /></div></Link>)}</div></section>
+    <section><div className="section-heading"><div><p className="eyebrow">YOUR KNOWLEDGE SHELF</p><h2>필요한 순간, 바로 찾아보세요.</h2></div><Link href="/library">전체 문서 <ArrowUpRight size={15} /></Link></div><div className="collection-grid">{collections.map(c => <Link className="collection-card" key={c.href} href={c.href}><span className={`collection-icon ${c.color}`}>{c.icon}</span><h3>{c.title}</h3><p>{c.text}</p><span className="collection-count">{documents.filter(d => d.group === c.group).length}개 문서 <ArrowUpRight size={15} /></span></Link>)}</div></section>
+    <div className="bottom-note"><span>✳</span><div><strong>읽는 데서 끝나지 않도록.</strong><p>각 단원의 실습 메모에 내 사업에 적용할 한 가지를 남겨보세요.</p></div><Link href={`/docs/${next.id}`}>오늘의 한 걸음 <ArrowRight size={16} /></Link></div></div>;
+}

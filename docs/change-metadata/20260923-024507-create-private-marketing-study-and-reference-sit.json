@@ -1,0 +1,655 @@
+{
+  "schema_version": "1.0",
+  "change_id": "20260923-024649-create-private-marketing-study-and-reference-sit",
+  "created_at": "2026-09-23T02:46:49+09:00",
+  "repository": "marketing-academy",
+  "branch": "main",
+  "baseline_commit": "unborn",
+  "request": "Build a React marketing learning wiki from existing materials",
+  "title": "Create private marketing study and reference site",
+  "purpose": "Turn local research into searchable lessons with persistent study tools",
+  "files": [
+    {
+      "path": "app/api/search/route.ts",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 5
+        }
+      ],
+      "working_tree_sha256": "ada7b8aab01ac67e130e1ffe817db0c1899367f6d87447335ca611ad22d0dfbf",
+      "symbols": [
+        "GET",
+        "/api/search"
+      ],
+      "purpose": "Enable Korean full-text discovery",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Returns statically generated titles, groups and full plain text for all 48 pages.",
+      "data_impact": "Reads generated documents; sends corpus to the local browser.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Search endpoint exposes all imported private documents if publicly deployed."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/docs/[id]/page.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 50
+        }
+      ],
+      "working_tree_sha256": "d4c0ce72b408d069ec8ff82325df06a741dd56d2431bcb219971864ee897b350",
+      "symbols": [
+        "Page",
+        "resolveLink",
+        "generateStaticParams"
+      ],
+      "purpose": "Make source research readable as connected lessons",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Renders 48 Markdown pages with safe links, tables, TOC, correction references and study tools; preserves single-tilde price ranges.",
+      "data_impact": "Reads generated source excerpts; does not write original documents.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Referenced attachments outside the imported corpus are displayed as source references; facts are not independently reverified."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/globals.css",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 55
+        }
+      ],
+      "working_tree_sha256": "8eb5eba7d694a9882f82380e44612b5700cfcf4ea661252d852e02fca0b6f41d",
+      "symbols": [
+        "responsive layout",
+        "reader typography",
+        "search dialog"
+      ],
+      "purpose": "Provide a focused desktop and mobile reading interface",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Styles green and cream learning dashboard, mobile menu, scrollable tables and keyboard focus.",
+      "data_impact": "No application data writes; browser may request Google Fonts.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "External font availability changes typography; system font fallback exists."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/layout.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 8
+        }
+      ],
+      "working_tree_sha256": "378533cbca5f5235b590ac42f0ddfd7cfad1b9ee31b5d7ff00c699660cd9cc48",
+      "symbols": [
+        "RootLayout",
+        "metadata"
+      ],
+      "purpose": "Share Korean navigation and study state",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Wraps every route in study provider and app shell; supplies no-index metadata.",
+      "data_impact": "Passes document summaries to browser.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "No-index is not access control; local binding is the current exposure boundary."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/library/[group]/page.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 6
+        }
+      ],
+      "working_tree_sha256": "35a6e14f982e0583667a982ef8bef11e66531d126114e8b1d894f8ab75df6683",
+      "symbols": [
+        "Page",
+        "generateStaticParams"
+      ],
+      "purpose": "Offer topic-specific browsing",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Serves playbook, research and case collections; unknown groups return 404.",
+      "data_impact": "Reads document summaries only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "New category identifiers must be added to the explicit map."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/library/page.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 3
+        }
+      ],
+      "working_tree_sha256": "0412262669753d203aa9a57b676ba6fbb4b19a27304810bc4fe3bf18c60045da",
+      "symbols": [
+        "Page",
+        "/library"
+      ],
+      "purpose": "Expose all imported originals",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Renders the searchable 40-document library.",
+      "data_impact": "Reads document summaries only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Library depends on content import succeeding."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/not-found.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 2
+        }
+      ],
+      "working_tree_sha256": "0a91d12845c9057a60c42215592e01628e3dc7bba6ed6fafee6726dbf9a9bab2",
+      "symbols": [
+        "NotFound"
+      ],
+      "purpose": "Recover from invalid document URLs",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Displays Korean recovery link to learning home.",
+      "data_impact": "none: presentation only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "none: invalid routes return an actionable 404."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/page.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 3
+        }
+      ],
+      "working_tree_sha256": "5f62e8aaa4a267456b42ef71e132a964a2010d8553cd79e2138ddd03f73b5ea7",
+      "symbols": [
+        "Home",
+        "/"
+      ],
+      "purpose": "Provide the study starting point",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Renders learning dashboard using imported summaries.",
+      "data_impact": "Reads document summaries only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Dashboard requires generated content at build time."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "app/saved/page.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 3
+        }
+      ],
+      "working_tree_sha256": "c6b6457bce89eb506d3766a839a69f52aea06a3dd272f33fdbc48bd3c5a91f78",
+      "symbols": [
+        "Page",
+        "/saved"
+      ],
+      "purpose": "Offer a personal reading shelf",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Displays bookmarked documents from browser state.",
+      "data_impact": "Reads localStorage state through Library.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Bookmarks are unavailable across different browser origins or devices."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "components/dashboard.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 22
+        }
+      ],
+      "working_tree_sha256": "afd9a2bae23db94ff1f52173fee07c1bfb524269ffd33c94ccbc875300521bce",
+      "symbols": [
+        "Dashboard"
+      ],
+      "purpose": "Turn research into an approachable study journey",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Shows eight lessons, progress, resume link and three reference collections.",
+      "data_impact": "Reads progress and last document; no direct writes.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Resume opens last visited document, which may be a reference rather than a lesson."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "components/library.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 12
+        }
+      ],
+      "working_tree_sha256": "26ba7185683b9d3ca4eaa30f0b579153682a435a4b16c8552c8e2f0a4272a358",
+      "symbols": [
+        "Library"
+      ],
+      "purpose": "Support filtering and saving documents",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Filters titles/descriptions and allows bookmark toggles and saved-only listing.",
+      "data_impact": "Reads summaries and invokes browser bookmark changes.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "List filtering is title/description only; global search handles full body."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "components/progress.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 29
+        }
+      ],
+      "working_tree_sha256": "72b2e2dc22e94436f1171ae8368632f7937b2272fbc23d176c22695cb2a109be",
+      "symbols": [
+        "ProgressProvider",
+        "useProgress"
+      ],
+      "purpose": "Persist study work without a backend",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Loads and validates versioned localStorage state; saves notes, completed pages, bookmarks and last visit; tolerates broken storage.",
+      "data_impact": "Writes marketing-notes-v1 in this browser only; no server database.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Clearing browser storage loses records; simultaneous tabs are not synchronized."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "components/shell.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 57
+        }
+      ],
+      "working_tree_sha256": "eaa528e1d460494850e76c785239d99d3fb1cc995911186aee01dc310490efda",
+      "symbols": [
+        "Shell",
+        "Layout",
+        "openSearch"
+      ],
+      "purpose": "Make study navigation and full-text search available everywhere",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Provides sidebar, responsive navigation, progress strip and native dialog search with Ctrl/Cmd+K and Escape.",
+      "data_impact": "Reads local progress and fetches corpus from local search endpoint.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "First search loads complete corpus; large future archives may need a dedicated index."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "components/study-tools.tsx",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 17
+        }
+      ],
+      "working_tree_sha256": "9c7ae93bd068f17f8a03606dc225636fcbed35e5b198a9e7541be78f1cb03d0b",
+      "symbols": [
+        "DocumentActions",
+        "StudyTools"
+      ],
+      "purpose": "Add active learning to document reading",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Supports completion, bookmarks, editable auto-saved notes and per-lesson quiz feedback.",
+      "data_impact": "Stores notes, progress and last visit in browser; quiz answer state is temporary.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Quiz selections reset on navigation; browser storage is not a backup."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "lib/content.ts",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 9
+        }
+      ],
+      "working_tree_sha256": "43347a5c7e68e743333dd38638ed55c950137bb7d2031383d2d0669187055bcb",
+      "symbols": [
+        "Document",
+        "summaries",
+        "getDocument",
+        "correction"
+      ],
+      "purpose": "Centralize typed content access",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Exposes original documents, lesson excerpts, summary projections and correction link.",
+      "data_impact": "Reads generated JSON only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Import schema and TypeScript types must remain aligned."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "next.config.ts",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 3
+        }
+      ],
+      "working_tree_sha256": "a229ed5b1b9c5324ad55a4f571c5e4edbd3723f68f5534cb6dadaed33f94674d",
+      "symbols": [
+        "config"
+      ],
+      "purpose": "Configure local Next application",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Disables powered-by header and developer indicator.",
+      "data_impact": "none: build/runtime configuration only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Framework version changes may alter configuration support."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "package.json",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 34
+        }
+      ],
+      "working_tree_sha256": "38c373c8d9cc1ca638b430a004a10c73b4e27121640bf042598be3a4885c1fdd",
+      "symbols": [
+        "scripts",
+        "dependencies",
+        "devDependencies"
+      ],
+      "purpose": "Make setup and local execution reproducible",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Defines import, build, start, typecheck and tests with Next, React, Fumadocs and Markdown dependencies.",
+      "data_impact": "Installs dependency packages; start/dev bind only 127.0.0.1:3107.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Changing startup host to a public address would expose private source content."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "playwright.config.ts",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 6
+        }
+      ],
+      "working_tree_sha256": "b48235d50b37f8d6ed0b5d3ad8ad37f70feaa13b2fb208e0719e2b963e4cf2ea",
+      "symbols": [
+        "defineConfig"
+      ],
+      "purpose": "Verify real browser behavior",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Runs isolated headless tests against loopback server and retains failure traces.",
+      "data_impact": "Writes disposable browser traces and test results.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Chromium installation must be present for browser tests."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "scripts/import-content.mjs",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 48
+        }
+      ],
+      "working_tree_sha256": "e0b905729bf3de1af523fbeb2db1547493cc321a4141fff0262c823fbee9e14c",
+      "symbols": [
+        "walk",
+        "plain",
+        "curriculum"
+      ],
+      "purpose": "Reuse existing research without modifying it",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Imports 40 originals excluding hidden folders, emits 8 exact master excerpts with exercises and quizzes, generates stable path-based IDs.",
+      "data_impact": "Reads sibling research files; writes ignored generated/content.json; never writes source files.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Source folder path must be present; moving source filenames changes IDs and existing progress references."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "tests/browser/study.spec.ts",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 68
+        }
+      ],
+      "working_tree_sha256": "ba44de0ce16ba5ab2acc6e17d97ea0bd7329048d4be7fcedfe3dd0dba2367b99",
+      "symbols": [
+        "study flow",
+        "search flow",
+        "mobile flow",
+        "storage recovery"
+      ],
+      "purpose": "Guard meaningful study and reading behavior",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Tests persistence, Korean full-text search, correction navigation, quizzes, price-range rendering, responsive tables and 404s.",
+      "data_impact": "Uses disposable browser contexts and test notes only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Covers Chromium rather than every browser engine."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "tests/content.test.mjs",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 27
+        }
+      ],
+      "working_tree_sha256": "a9f70307e51d703542b09e25142555dcc7774c75dbb12f42cf5e9082115aa7cd",
+      "symbols": [
+        "source preservation test",
+        "lesson integrity test"
+      ],
+      "purpose": "Protect source fidelity during transformation",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Verifies every original body against disk and all eight lesson excerpts and quiz answers.",
+      "data_impact": "Reads original and generated text; no source writes.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Count assertions deliberately require updates when source inventory expands."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    },
+    {
+      "path": "tsconfig.json",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 5
+        }
+      ],
+      "working_tree_sha256": "cd867bb96f0934aa0d853d217649a0dfebc4969e0c31067dd74969a5c79391b7",
+      "symbols": [
+        "compilerOptions"
+      ],
+      "purpose": "Type-check the complete app",
+      "previous_behavior": "No study website or corresponding file existed before this task.",
+      "new_behavior": "Enables strict typing, Next plugin, JSON imports and local path aliases.",
+      "data_impact": "none: build configuration only.",
+      "access_control_impact": "No accounts or roles added. Site runs on loopback only; original filesystem permissions unchanged.",
+      "risks": [
+        "Requires generated JSON before typechecking."
+      ],
+      "rollback": "Stop the marketing-academy loopback server and revert this file together with the initial site commit. Keep sibling research files and browser localStorage untouched; no data migration is needed."
+    }
+  ],
+  "production_safety": {
+    "operational_data": "Read existing local research documents only. No operational database, account, customer record or original research file was created, modified or deleted. Test notes were written only to isolated browser contexts. Generated corpus stays local and is Git-ignored.",
+    "schema_migration": "none: no database or backfill; browser state uses a versioned key.",
+    "external_side_effects": [
+      "Installed npm packages and read official framework documentation.",
+      "Browser may fetch Google Fonts with system-font fallback.",
+      "Started local Next server on 127.0.0.1:3107; no external deployment, messaging or publishing."
+    ]
+  },
+  "verification": [
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "evidence": "Production build succeeded; 57 static pages, 40 original documents and 8 lessons generated."
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "passed",
+      "evidence": "Strict TypeScript validation completed without errors; final production build also typechecked."
+    },
+    {
+      "command": "npm test",
+      "result": "passed",
+      "evidence": "2 tests passed, comparing all 40 original bodies against source disk files and validating all eight lesson excerpts."
+    },
+    {
+      "command": "npm run test:e2e",
+      "result": "passed",
+      "evidence": "4 Chromium browser flows passed, including reload persistence, quiz reset, price tilde preservation, Korean search, mobile table scrolling, storage corruption recovery and 404 status."
+    },
+    {
+      "command": "Desktop and 390px mobile screenshot inspection",
+      "result": "passed",
+      "evidence": "Checked dashboard and document layout. Single-tilde prices were corrected after visual review and covered by browser regression assertion."
+    }
+  ],
+  "residual_risks": [
+    "Local-only site; phone or remote Discord client cannot use the loopback URL. No hosting was deployed.",
+    "Source corpus contains client work; external deployment requires deciding which documents can be public.",
+    "Progress and notes are local to one browser origin and can be lost if its storage is cleared; no account sync or backup yet.",
+    "Source factual claims are preserved with correction-document links, not newly independently verified.",
+    "Source folder is a build prerequisite and must be re-imported after edits. Existing attachment files are not hosted.",
+    "Browser tests cover Chromium only."
+  ],
+  "commit": "same-as-metadata-file"
+}
