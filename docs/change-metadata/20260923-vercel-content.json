@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0",
+  "change_id": "20260923-025315-bundle-deployable-learning-content-for-vercel",
+  "created_at": "2026-09-23T02:53:15+09:00",
+  "repository": "marketing-academy",
+  "branch": "main",
+  "baseline_commit": "6dab8a757e0b2a114c57cfbafa16a1f4631208d5",
+  "request": "Fix Vercel ENOENT during content import and push the fix",
+  "title": "Bundle deployable learning content for Vercel",
+  "purpose": "Remove dependency on a sibling PC-only folder during cloud builds",
+  "files": [
+    {
+      "path": "components/dashboard.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": 15,
+          "old_end": 15,
+          "new_start": 15,
+          "new_end": 15
+        }
+      ],
+      "working_tree_sha256": "3e17602bf5ad5eea6adb5829fdcef54c57495e797acb57e2d012ac81c0e74412",
+      "symbols": [
+        "Dashboard collections"
+      ],
+      "purpose": "Hide unavailable learning collections",
+      "previous_behavior": "Dashboard always offered a client-case collection.",
+      "new_behavior": "Only collections represented by current content are displayed.",
+      "data_impact": "Reads bundled Markdown and generated summaries. No edits to sibling originals or browser learning records.",
+      "access_control_impact": "No authentication changes. Default public corpus excludes client cases; configured source overrides can still import local private content.",
+      "risks": [
+        "Bundled copies must be explicitly refreshed after local research changes."
+      ],
+      "rollback": "Revert this commit and rebuild; previous default again needs the sibling research directory. Original files and browser storage remain compatible."
+    },
+    {
+      "path": "components/library.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": 11,
+          "old_end": 11,
+          "new_start": 11,
+          "new_end": 11
+        }
+      ],
+      "working_tree_sha256": "1a17dbbb5e38750067f76c71b103c47da51d8501dceb70bb46bbc725da11ddf3",
+      "symbols": [
+        "Library tabs"
+      ],
+      "purpose": "Avoid empty client navigation in public builds",
+      "previous_behavior": "Client-case tab was always rendered.",
+      "new_behavior": "Client-case tab appears only when that group is imported.",
+      "data_impact": "Reads bundled Markdown and generated summaries. No edits to sibling originals or browser learning records.",
+      "access_control_impact": "No authentication changes. Default public corpus excludes client cases; configured source overrides can still import local private content.",
+      "risks": [
+        "Bundled copies must be explicitly refreshed after local research changes."
+      ],
+      "rollback": "Revert this commit and rebuild; previous default again needs the sibling research directory. Original files and browser storage remain compatible."
+    },
+    {
+      "path": "components/shell.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": 48,
+          "old_end": 48,
+          "new_start": 48,
+          "new_end": 48
+        }
+      ],
+      "working_tree_sha256": "9e618b3b6a74e239236af7a0e0d073bc3bfd7fa3443a84468bc6ddf86fe43599",
+      "symbols": [
+        "Layout navigation"
+      ],
+      "purpose": "Keep global navigation aligned with deployed content",
+      "previous_behavior": "Sidebar always linked to private cases.",
+      "new_behavior": "Sidebar omits client-case link when corpus has no client documents.",
+      "data_impact": "Reads bundled Markdown and generated summaries. No edits to sibling originals or browser learning records.",
+      "access_control_impact": "No authentication changes. Default public corpus excludes client cases; configured source overrides can still import local private content.",
+      "risks": [
+        "Bundled copies must be explicitly refreshed after local research changes."
+      ],
+      "rollback": "Revert this commit and rebuild; previous default again needs the sibling research directory. Original files and browser storage remain compatible."
+    },
+    {
+      "path": "scripts/import-content.mjs",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": 5,
+          "old_end": 5,
+          "new_start": 5,
+          "new_end": 5
+        },
+        {
+          "old_start": 9,
+          "old_end": 9,
+          "new_start": 9,
+          "new_end": 11
+        }
+      ],
+      "working_tree_sha256": "ab35534c935d75836703edbaee0e34a78af15f9db866d6a9fff8cf95de71b879",
+      "symbols": [
+        "root; walk"
+      ],
+      "purpose": "Make builds independent of private sibling folders",
+      "previous_behavior": "Default root was ../ad-agency-research; missing clients folder threw ENOENT.",
+      "new_behavior": "Default root is tracked content/research; optional missing subfolders are skipped; explicit source overrides still work.",
+      "data_impact": "Reads bundled Markdown and generated summaries. No edits to sibling originals or browser learning records.",
+      "access_control_impact": "No authentication changes. Default public corpus excludes client cases; configured source overrides can still import local private content.",
+      "risks": [
+        "Bundled copies must be explicitly refreshed after local research changes."
+      ],
+      "rollback": "Revert this commit and rebuild; previous default again needs the sibling research directory. Original files and browser storage remain compatible."
+    },
+    {
+      "path": "tests/content.test.mjs",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": 7,
+          "old_end": 8,
+          "new_start": 7,
+          "new_end": 8
+        },
+        {
+          "old_start": 10,
+          "old_end": 10,
+          "new_start": 10,
+          "new_end": 10
+        },
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 16,
+          "new_end": 22
+        }
+      ],
+      "working_tree_sha256": "1ab9ebf97634f56e9cd4b5d84f21d04a483cabd70a8d36b778283b6786c4065f",
+      "symbols": [
+        "source fidelity; deployment corpus exclusion"
+      ],
+      "purpose": "Guard portable builds and publication scope",
+      "previous_behavior": "Tests assumed 40 sibling documents and could not run from clone.",
+      "new_behavior": "Tests compare bundled sources, ensure 19 default documents exclude clients/internal audit data, and validate 8 lessons.",
+      "data_impact": "Reads bundled Markdown and generated summaries. No edits to sibling originals or browser learning records.",
+      "access_control_impact": "No authentication changes. Default public corpus excludes client cases; configured source overrides can still import local private content.",
+      "risks": [
+        "Bundled copies must be explicitly refreshed after local research changes."
+      ],
+      "rollback": "Revert this commit and rebuild; previous default again needs the sibling research directory. Original files and browser storage remain compatible."
+    }
+  ],
+  "production_safety": {
+    "operational_data": "Copied 19 general research/learning Markdown files into versioned content/research. No original source document, database or customer record was modified. Client files, customer-specific roadmap/scenario and site audits were not included.",
+    "schema_migration": "none: no database, migration or backfill.",
+    "external_side_effects": [
+      "Push the fix and bundled general content to the user-designated public GitHub repository; its Vercel integration may deploy automatically.",
+      "Installed packages in a clean temporary directory for independent build verification."
+    ]
+  },
+  "verification": [
+    {
+      "command": "npm ci && npm run build && npm test in isolated source snapshot",
+      "result": "passed",
+      "evidence": "Copied only staged/tracked repository files into a fresh temporary directory, with no sibling research folder or generated content. Production build generated 36 pages; 3 content tests passed."
+    },
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "evidence": "Local production build and TypeScript passed with 19 documents and 8 lessons."
+    },
+    {
+      "command": "npm run test:e2e",
+      "result": "passed",
+      "evidence": "4 browser scenarios passed against rebuilt production server: persistence, quizzes, search, mobile tables and corrupt-storage recovery."
+    }
+  ],
+  "residual_risks": [
+    "Independent validation ran on Windows Node 21; actual Vercel Linux Node 24 result is confirmed through deployment status after push.",
+    "Public snapshot contains 19 general documents; private client material stays local. Explicit custom source paths can import more material and must not be configured for public builds without review.",
+    "Bundled research claims were preserved, not newly independently verified."
+  ],
+  "commit": "same-as-metadata-file"
+}

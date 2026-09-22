@@ -2,11 +2,13 @@ import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 
-const root = path.resolve(process.env.MARKETING_SOURCE_DIR || '../ad-agency-research');
+const root = path.resolve(process.env.MARKETING_SOURCE_DIR || 'content/research');
 const output = path.resolve('generated');
 const folders = ['raw', 'playbook', 'clients'];
 async function walk(dir) {
-  const entries = await readdir(dir, { withFileTypes: true });
+  let entries;
+  try { entries = await readdir(dir, { withFileTypes: true }); }
+  catch (error) { if (error.code === 'ENOENT') return []; throw error; }
   const files = await Promise.all(entries.filter(e => !e.name.startsWith('.')).map(async e => {
     const file = path.join(dir, e.name);
     return e.isDirectory() ? walk(file) : e.name.endsWith('.md') ? [file] : [];
