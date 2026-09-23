@@ -1,0 +1,270 @@
+{
+  "schema_version": "1.0",
+  "change_id": "20260923-090844-add-rich-link-previews-for-marketing-notes",
+  "created_at": "2026-09-23T09:08:44+09:00",
+  "repository": "marketing-academy",
+  "branch": "main",
+  "baseline_commit": "8ccbb1b5efb0a89db6ac2b9060225f9ac02d0d28",
+  "request": "Add metadata so shared links show title description and image",
+  "title": "Add rich link previews for marketing notes",
+  "purpose": "Provide discoverable Open Graph and Twitter cards with absolute image URLs",
+  "files": [
+    {
+      "path": "app/docs/[id]/page.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 13,
+          "new_end": 13
+        },
+        {
+          "old_start": 14,
+          "old_end": 14,
+          "new_start": 15,
+          "new_end": 20
+        }
+      ],
+      "working_tree_sha256": "8002d162569d9ebefbc7925726d280ce8c2c759001964e912477dbe342bc4da5",
+      "symbols": [
+        "generateMetadata"
+      ],
+      "purpose": "Share the specific document being viewed",
+      "previous_behavior": "Document metadata only changed the browser title.",
+      "new_behavior": "Valid documents expose specific title, description and canonical share URL; missing documents return 404.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "app/layout.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 4,
+          "new_end": 4
+        },
+        {
+          "old_start": 5,
+          "old_end": 5,
+          "new_start": 6,
+          "new_end": 12
+        }
+      ],
+      "working_tree_sha256": "523707b0a9babedb545117da82189dd1bf4cfe4559f556f951aa2592ca545893",
+      "symbols": [
+        "metadata"
+      ],
+      "purpose": "Define complete default share cards",
+      "previous_behavior": "Root exposed only title, description and robots.",
+      "new_behavior": "Root declares metadataBase, site identity, canonical, Korean OG and large Twitter image card.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "app/library/[group]/page.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 4,
+          "new_end": 4
+        },
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 6,
+          "new_end": 10
+        }
+      ],
+      "working_tree_sha256": "52c3ba5806c11c76065fae9bcb96831cc5d43c2bdc92826cf9b9b73c6a14c0d2",
+      "symbols": [
+        "generateMetadata"
+      ],
+      "purpose": "Identify category shares",
+      "previous_behavior": "Category metadata was generic.",
+      "new_behavior": "Each category supplies a matching title, description and URL.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "app/library/page.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 3,
+          "new_end": 4
+        }
+      ],
+      "working_tree_sha256": "c6da8a8c46ceb043b7c0f5a317e99d90b311bd051d0b4af43d8c9a5340aac736",
+      "symbols": [
+        "metadata"
+      ],
+      "purpose": "Identify library shares",
+      "previous_behavior": "Library inherited generic metadata.",
+      "new_behavior": "Library shares have a distinct title, description and canonical.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "app/saved/page.tsx",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 3,
+          "new_end": 4
+        }
+      ],
+      "working_tree_sha256": "b760553011bbbd4df85ee42aa0e0cea187c7fc1a86271b495870dbba9d6b381e",
+      "symbols": [
+        "metadata"
+      ],
+      "purpose": "Identify saved-library shares without revealing personal data",
+      "previous_behavior": "Saved page inherited generic metadata.",
+      "new_behavior": "Saved page has a generic personal-library description; no bookmarks or notes are exposed.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "lib/metadata.ts",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 18
+        }
+      ],
+      "working_tree_sha256": "c2d36d68fe2c963c43453e3f8c3cbe08079bd23600a9c4d11101be067d6ade04",
+      "symbols": [
+        "shareMetadata; siteUrl"
+      ],
+      "purpose": "Centralize share tags and deployment URL resolution",
+      "previous_behavior": "No shared metadata helper existed.",
+      "new_behavior": "Builds absolute metadata URLs using explicit site URL, Vercel production host, deployment host or localhost fallback.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "scripts/generate-share-image.mjs",
+      "change_type": "added",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 1,
+          "new_end": 22
+        }
+      ],
+      "working_tree_sha256": "474a55440e42631eeb3ce022d1c2f75e66a82c01158fff699f58b7e10b13f6cc",
+      "symbols": [
+        "share PNG generation"
+      ],
+      "purpose": "Supply a deterministic versioned preview asset",
+      "previous_behavior": "No social preview image existed.",
+      "new_behavior": "Renders a 1200x630 Korean brand card to public/share-card-v1.png; the committed PNG needs no runtime browser or font service.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    },
+    {
+      "path": "tests/browser/study.spec.ts",
+      "change_type": "modified",
+      "previous_path": null,
+      "line_ranges": [
+        {
+          "old_start": null,
+          "old_end": null,
+          "new_start": 2,
+          "new_end": 26
+        }
+      ],
+      "working_tree_sha256": "1b5a2286d336b57b31360c2ff7218d374c02096c94437bfff83eb0e16c4f874d",
+      "symbols": [
+        "share bot metadata test"
+      ],
+      "purpose": "Validate crawler-visible HTML and image transport",
+      "previous_behavior": "Tests did not cover social crawlers.",
+      "new_behavior": "Tests Discordbot and Twitterbot raw HTML on home/document/category, absolute OG URLs and actual PNG dimensions alongside existing study flows.",
+      "data_impact": "Reads public document summaries or static site copy only. No original content, user notes, bookmarks or production data is changed.",
+      "access_control_impact": "No access controls or Vercel protection settings changed; original noindex policy stays intact.",
+      "risks": [
+        "Protected deployment URLs remain inaccessible to unauthenticated share crawlers. Custom domains should set NEXT_PUBLIC_SITE_URL."
+      ],
+      "rollback": "Revert this commit and redeploy. No migration is needed; existing learning data remains compatible."
+    }
+  ],
+  "production_safety": {
+    "operational_data": "No operational data mutations. Adds versioned generated preview PNG and descriptive HTML metadata for existing public documents.",
+    "schema_migration": "none: no database or storage schema changes.",
+    "external_side_effects": [
+      "Push to the authorized GitHub main branch triggers Vercel automatic deployment.",
+      "Read official Next metadata documentation and GitHub deployment status; no external messages sent."
+    ]
+  },
+  "verification": [
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "evidence": "Next production build and strict TypeScript completed with 36 generated pages."
+    },
+    {
+      "command": "npm run test:e2e",
+      "result": "passed",
+      "evidence": "5 tests passed. Raw HTML for Discordbot/Twitterbot includes title, description, absolute URL, Korean locale and PNG URL. Preview asset responds as image/png with dimensions 1200x630."
+    },
+    {
+      "command": "node scripts/generate-share-image.mjs and visual inspection",
+      "result": "passed",
+      "evidence": "Generated card inspected for Korean glyph rendering, margins and wrapping; final card has no clipped text."
+    }
+  ],
+  "residual_risks": [
+    "Vercel authentication protection can prevent crawler access even with correct metadata. Protection has not been disabled.",
+    "Previously shared URLs can retain the messaging platform cached preview until refreshed.",
+    "Canonical base follows NEXT_PUBLIC_SITE_URL then Vercel production/deployment environment variables. Custom domain configuration is optional and described in README."
+  ],
+  "commit": "same-as-metadata-file"
+}

@@ -26,7 +26,15 @@ PC에서 http://127.0.0.1:3107 접속. 운영 빌드는 `npm run build`, 실행�
 - 기본 배포에는 일반 학습 자료만 포함됩니다. 추가 문서를 넣거나 별도 원본 경로를 지정하면 그 내용이 웹페이지와 검색 API에 포함됩니다.
 - Google Fonts를 사용할 수 없으면 시스템 한글 폰트로 표시합니다.
 
-## 검증
+## 링크 공유 미리보기
+
+- Open Graph와 Twitter 큰 이미지 카드를 제공합니다. 각 문서에는 해당 제목·소개·공유 주소가 들어갑니다.
+- 공유 이미지는 `public/share-card-v1.png`(1200×630)이며 빌드 중 외부 이미지 서비스에 의존하지 않습니다. 로컬에서 `node scripts/generate-share-image.mjs`로 다시 만들 수 있습니다.
+- 기준 URL은 `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` 순으로 결정합니다. 커스텀 도메인이 있으면 Vercel 환경변수 `NEXT_PUBLIC_SITE_URL=https://실제도메인`을 설정하고 재배포하세요.
+- 공유 봇도 페이지와 이미지에 로그인 없이 접근할 수 있어야 합니다. Vercel 로그인 보호가 적용된 배포 전용 주소 대신 공개 Production 도메인을 공유하세요. 메타태그 설정이 접근 보호를 해제하지는 않습니다.
+- 기존 검색엔진 noindex 설정은 유지하며, 개인 북마크·메모는 공유 메타데이터에 포함하지 않습니다.
+
+## 검증 명령
 
 ```powershell
 npm run build

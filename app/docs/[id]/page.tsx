@@ -10,8 +10,14 @@ import { Callout } from 'fumadocs-ui/components/callout';
 import { ArrowLeft, ArrowRight, Clock, FileText } from 'lucide-react';
 import { allDocuments, documents, lessons, correction, getDocument } from '@/lib/content';
 import { DocumentActions, StudyTools } from '@/components/study-tools';
+import { shareMetadata, siteName } from '@/lib/metadata';
 export function generateStaticParams() { return allDocuments.map(d => ({ id: d.id })); }
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) { const { id } = await params; return { title: getDocument(id)?.title || '문서를 찾을 수 없습니다' }; }
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const document = getDocument(id);
+  if (!document) notFound();
+  return { ...shareMetadata(`${document.title} | ${siteName}`, document.description, `/docs/${id}`), title: document.title };
+}
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const document = getDocument(id);

@@ -1,4 +1,29 @@
 import { test, expect } from '@playwright/test';
+test('share bots receive complete metadata and a real 1200 by 630 PNG without JavaScript', async ({ request }) => {
+  for (const agent of ['Discordbot/2.0', 'Twitterbot/1.0']) {
+    for (const [route, title] of [['/', '마케팅 노트'], ['/docs/lesson-1', '마케팅 대행의 큰 그림'], ['/library/playbook', '실무 플레이북']]) {
+      const response = await request.get(route, { headers: { 'user-agent': agent } });
+      expect(response.status()).toBe(200);
+      const head = (await response.text()).split('</head>')[0];
+      const meta = (name: string) => head.match(new RegExp(`<meta (?:property|name)="${name}" content="([^"]+)"`))?.[1];
+      expect(meta('og:title')).toContain(title);
+      expect(meta('og:description')?.length).toBeGreaterThan(15);
+      expect(meta('og:locale')).toBe('ko_KR');
+      expect(meta('twitter:card')).toBe('summary_large_image');
+      expect(meta('twitter:image')).toEqual(meta('og:image'));
+      expect(new URL(meta('og:url')!).pathname).toBe(route);
+      const image = new URL(meta('og:image')!);
+      expect(['http:', 'https:']).toContain(image.protocol);
+      const png = await request.get(image.pathname);
+      expect(png.status()).toBe(200);
+      expect(png.headers()['content-type']).toContain('image/png');
+      const buffer = await png.body();
+      expect(buffer.subarray(1, 4).toString()).toBe('PNG');
+      expect(buffer.readUInt32BE(16)).toBe(1200);
+      expect(buffer.readUInt32BE(20)).toBe(630);
+    }
+  }
+});
 test('lesson progress, notes, bookmarks persist and quizzes reset between lessons', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
